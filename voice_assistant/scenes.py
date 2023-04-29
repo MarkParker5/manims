@@ -332,5 +332,24 @@ class Levenshtein(Scene):
 class Command(Scene):
     
     def construct(self):
-        self.play(Write(Tex('qwerty')))
+        code = Code(
+            './snippet.py',
+            tab_width=4,
+            background='window',
+            style='one-dark'
+        )
         
+        code2 = Code(
+            './snippet2.py',
+            tab_width=4,
+            background='none',
+            style='one-dark'
+        ).code.align_to(code.code, DL)
+        
+        self.play(Write(code), run_time=3)
+        self.wait(2)
+        self.play(Write(code2), run_time=1.5)
+        
+        group = VGroup(code, code2)
+        
+        self.wait(3)
