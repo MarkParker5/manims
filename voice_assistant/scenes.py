@@ -1,5 +1,9 @@
+import random
+import numpy as np
 from manim import *
 
+
+random.seed(1)
 
 class MainCycle(Scene):
     
@@ -208,3 +212,76 @@ class Command(Scene):
     
     def construct(self):
         self.play(Write(Tex('qwerty')))
+
+class Perceptron(Scene):
+    def construct(self):
+        input_layer = VGroup()
+        for i in range(1, 4):
+            circle = Circle(radius=0.3, fill_opacity=1, color=WHITE).shift(LEFT*2 + UP*(i-1))
+            input_layer.add(circle)
+
+        hidden_layer = VGroup()
+        for i in range(1, 4):
+            circle = Circle(radius=0.3, fill_opacity=1, color=WHITE).shift(UP*(i-1))
+            hidden_layer.add(circle)
+
+        output_layer = VGroup()
+        for i in range(1, 3):
+            circle = Circle(radius=0.3, fill_opacity=1, color=WHITE).shift(RIGHT*2 + UP*(i-1) + UP*0.5)
+            output_layer.add(circle)
+        
+        arrows1 = VGroup()
+        for i in range(1, 4):
+            for j in range(1, 4):
+                if not random.randint(0, 3):
+                    continue
+                arrows1.add(
+                    Arrow(input_layer[i-1].get_right(), hidden_layer[j-1].get_left(), buff=0.1, color=WHITE, tip_length=0.1, stroke_width=2)
+                )
+        
+        arrows2 = VGroup()
+        for i in range(1, 4):
+            for j in range(1, 3):
+                if not random.randint(0, 10):
+                    continue
+                arrows2.add(
+                    Arrow(hidden_layer[i-1].get_right(), output_layer[j-1].get_left(), buff=0.1, color=WHITE, tip_length=0.1, stroke_width=2)
+                )
+                
+        perceptron = VGroup(input_layer, hidden_layer, output_layer, arrows1, arrows2)
+        
+        self.add(perceptron)
+        self.wait(1)
+
+class Algorithm(Scene):
+    def construct(self):
+        rect1 = Rectangle(width=2, height=1, color=BLUE, fill_opacity=0.5) \
+            .to_edge(UP, buff=0.5)
+                   
+        rhombus1 = Polygon(
+            UP* 0.5, 
+            RIGHT * 1, 
+            DOWN * 0.5, 
+            LEFT * 1,
+            color=WHITE,
+            fill_opacity=0.5,
+            stroke_width=2,
+            stroke_color=WHITE
+        ).next_to(rect1, direction=DOWN, buff=1)
+        
+        rect2 = Rectangle(width=2, height=1, color=BLUE, fill_opacity=0.5) \
+            .next_to(rhombus1, direction=DR, buff=0.25)
+        
+        rect3 = Rectangle(width=2, height=1, color=BLUE, fill_opacity=0.5) \
+            .next_to(rhombus1, direction=DL, buff=0.25)
+        
+        arrow1 = Arrow(rect1.get_bottom(), rhombus1.get_top(), buff=0.1, color=WHITE, tip_length=0.1, stroke_width=2)
+
+        arrow2 = Arrow(rhombus1.get_right(), rect2.get_top(), buff=0.1, color=WHITE, tip_length=0.1, stroke_width=2)
+
+        arrow3 = Arrow(rhombus1.get_left(), rect3.get_top(), buff=0.1, color=WHITE, tip_length=0.1, stroke_width=2)
+        
+        self.add(rect1, rhombus1, rect2, rect3, arrow1, arrow2, arrow3)
+        self.wait(1)
+
+
