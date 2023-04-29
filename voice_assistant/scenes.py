@@ -333,7 +333,7 @@ class Command(Scene):
     
     def construct(self):
         code = Code(
-            './snippet.py',
+            './snippet1.py',
             tab_width=4,
             background='window',
             style='one-dark'
@@ -352,4 +352,17 @@ class Command(Scene):
         
         group = VGroup(code, code2)
         
+        self.wait(3)
+        
+class FindCommand(Scene):
+    
+    def construct(self):
+        code = Code(
+            './snippet3.py',
+            tab_width=4,
+            background='window',
+            style='one-dark'
+        ).scale(0.8)
+        
+        self.play(Write(code), run_time=3)
         self.wait(3)
