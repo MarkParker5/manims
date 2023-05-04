@@ -366,3 +366,46 @@ class FindCommand(Scene):
         
         self.play(Write(code), run_time=3)
         self.wait(3)
+        
+class List(Scene):
+    
+    def construct(self):
+        text = '''
+1. Register on Google Cloud Console and create a project.;
+2. Enable Google Cloud Text-to-Speech API for this project.;
+3. Create a Service Account to access the API.;
+4. Generate an API key in JSON format for this account.;
+5. Save the API key in a safe place and use it in your application'''
+        
+        last_line = None
+        for line in text.split(';'):
+            vtext = Text(line.strip()).scale(0.5)
+            if last_line is None:
+                vtext.to_edge(UP, buff=0.5)
+            else:
+                vtext.next_to(last_line, DOWN, buff=0.5)
+            self.play(Write(vtext))
+            last_line = vtext
+            self.wait(1)
+            
+class List2(Scene):
+    
+    def construct(self):
+        text = '''1. Clone the repository;
+2. Install dependencies;
+3. While the libraries are downloading, press the like button under the video, 
+it Won't work without it, I checked.;
+4. Open file `commands.py`;
+5. Create a function that takes a string and returns a response;
+6. In the function we perform the necessary action, send a http request to the hub;
+7. Return the response;
+8. Add a command, pass templates and a launch function;
+9. Repeat steps 5-8 for each command;
+10. Write in the comments what commands you have added;
+11. Run `main.py`'''
+
+        vtext = Text('').scale(0.5)
+        for line in text.split(';'):
+            new = Text(line.strip()).scale(0.5)
+            self.play(Transform(vtext, new))
+            self.wait(1)
